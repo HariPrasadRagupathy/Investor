@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="300dp"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:orientation="horizontal">
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <ImageButton
+            android:id="@+id/bt_close"
+            android:layout_width="?attr/actionBarSize"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:tint="@color/appgrey"
+            app:srcCompat="@drawable/ic_close" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:minHeight="120dp"
+        android:orientation="vertical"
+        android:padding="@dimen/spacing_mlarge">
+
+        <com.mikhaellopez.circularimageview.CircularImageView
+            android:id="@+id/cm_iv_dialogimage"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:src="@drawable/logout"
+            app:civ_border_color="@color/appgrey"
+            app:civ_border_width="1dp" />
+
+        <TextView
+            android:id="@+id/cm_tv_dialogtitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_large"
+            android:text="LogOut"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/cm_tv_dialogcontent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/spacing_middle"
+            android:layout_marginRight="@dimen/spacing_middle"
+            android:layout_marginTop="@dimen/spacing_medium"
+            android:text="@string/logout"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:minHeight="120dp"
+            android:orientation="horizontal"
+            android:padding="@dimen/spacing_mlarge">
+
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/cm_bt_dialogyes"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_large"
+                android:background="@drawable/btn_rounded_yellow"
+                android:paddingLeft="@dimen/spacing_mlarge"
+                android:paddingRight="@dimen/spacing_mlarge"
+                android:text="@string/cnt_yes"
+                android:textColor="@android:color/white" />
+
+            <View
+                android:layout_width="10dp"
+                android:layout_height="match_parent" />
+
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/cm_bt_dialogno"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_large"
+                android:background="@drawable/btn_rounded_yellow"
+                android:paddingLeft="@dimen/spacing_mlarge"
+                android:paddingRight="@dimen/spacing_mlarge"
+                android:text="@string/cnt_no"
+                android:textColor="@android:color/white" />
+            <View
+                android:layout_width="10dp"
+                android:layout_height="match_parent" />
+
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/cm_bt_dialogok"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:layout_marginTop="@dimen/spacing_large"
+                android:background="@drawable/btn_rounded_yellow"
+                android:paddingLeft="@dimen/spacing_mlarge"
+                android:paddingRight="@dimen/spacing_mlarge"
+                android:text="@string/cnt_ok"
+                android:textColor="@android:color/white" />
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

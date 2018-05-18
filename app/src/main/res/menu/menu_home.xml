@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/action_profile"
+        android:icon="@drawable/profile_3x"
+        android:orderInCategory="100"
+        android:title="@string/menu_profile"
+
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/action_new_investment"
+        android:icon="@drawable/investment_3x"
+        android:orderInCategory="100"
+        android:title="@string/menu_new_investment"
+
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_investment_status"
+        android:icon="@drawable/invest_status_3x"
+        android:orderInCategory="100"
+        android:title="@string/menu_investmentstatus"
+
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_withdraw_fund"
+        android:icon="@drawable/withdraw_3x"
+        android:orderInCategory="100"
+        android:title="@string/menu_withdrawfund"
+
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_withdraw_status"
+        android:icon="@drawable/withdraw_3x"
+        android:orderInCategory="100"
+        android:title="@string/menu_withdrawstatus"
+
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_calculator"
+        android:icon="@drawable/calc_3x"
+        android:orderInCategory="100"
+        android:title="@string/menu_calculator"
+
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_earnings"
+        android:icon="@drawable/earning_3x"
+        android:orderInCategory="100"
+        android:title="@string/menu_earnings"
+
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_notification"
+        android:icon="@drawable/earning_3x"
+        android:orderInCategory="100"
+        android:title="@string/menu_notification"
+
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_settings"
+        android:icon="@drawable/setting_3x"
+        android:orderInCategory="100"
+        android:title="@string/menu_settings"
+
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_logout"
+        android:icon="@drawable/logout_3x"
+        android:orderInCategory="100"
+        android:title="@string/menu_logout"
+
+        app:showAsAction="never" />
+    <!-- <item
+         android:id="@+id/action_past_orders"
+         android:orderInCategory="100"
+         android:title="@string/menu_past_orders"
+         app:showAsAction="never" />
+    -->
+    <!-- <item
+         android:id="@+id/action_help"
+         android:orderInCategory="100"
+         android:title="@string/menu_help"
+         app:showAsAction="never" />
+
+     <item
+         android:id="@+id/action_settings"
+         android:orderInCategory="100"
+         android:title="@string/menu_settings"
+         app:showAsAction="never" />-->
+    <!--  <item
+          android:id="@+id/action_notification"
+          android:orderInCategory="100"
+          android:title="@string/menu_notification"
+          app:showAsAction="never" />
+  -->
+</menu>

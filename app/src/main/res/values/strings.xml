@@ -1,0 +1,151 @@
+<resources>
+    <string name="app_name">Investor</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+
+    <!--Menu-->
+    <string name="menu_profile">Profile</string>
+    <string name="menu_new_investment">New Investment</string>
+    <string name="menu_investmentstatus">Investment Status</string>
+    <string name="menu_withdrawfund">Withdraw Fund</string>
+    <string name="menu_withdrawstatus">Withdraw Status</string>
+    <string name="menu_calculator">Calculator</string>
+    <string name="menu_earnings">Earnings</string>
+    <string name="menu_notification">Notifications</string>
+    <string name="menu_settings">Settings</string>
+    <string name="menu_logout">Logout</string>
+    <string name="db_menu_newInvestment">New Investment</string>
+    <string name="db_menu_withdraw">Withdraw</string>
+    <string name="db_menu_pending_withdraw">Pending Withdraw</string>
+    <string name="db_menu_pending_Investment">Pending Investment</string>
+    <string name="db_menu_notification">Notification</string>
+    <string name="db_menu_calculator">Calculator</string>
+    <string name="logout">Are you sure to logout?</string>
+    <string name="hint_password">password</string>
+
+
+    <!--Login-->
+    <string name="lbl_login_title">SIGN IN</string>
+    <string name="lbl_login_username">USERNAME</string>
+    <string name="lbl_login_password">PASSWORD</string>
+    <string name="lbl_login_signin">SIGN IN</string>
+    <string name="lbl_login_newuser">New user?</string>
+    <string name="lbl_login_signup">Sign Up</string>
+
+    <!--Dashboard-->
+    <string name="lbl_dash_investamt">Investment Amount:</string>
+    <string name="lbl_dash_totearning">Total Earning:</string>
+
+
+    <!--New Investment-->
+    <string name="lbl_newinvestment_title">New Investment</string>
+    <string name="lbl_confirminvestment_title">Confirm Investment</string>
+
+    <string name="lbl_amount">Amount:</string>
+    <string name="lbl_duration">Duration:</string>
+    <string name="lbl_total_profit">Total Profit:</string>
+    <string name="lbl_monthly_profit">Monthly Profit:</string>
+    <string name="lbl_cancel_charge">Cancellation charge:</string>
+    <string name="lbl_next_button">P r o c e e d</string>
+    <string name="lbl_calculate_button">C a l c u l a t e</string>
+    <string name="lbl_review_button">R e v i e w</string>
+    <string name="lbl_confirm_button">C o n f i r m</string>
+    <string name="zeroamt">0.0 USD</string>
+    <string name="amtzeroamt">Amount: 0.0 USD</string>
+    <string name="defaultId">D Id:</string>
+    <string name="defaultStatus">Status</string>
+
+    <!--Investment Status-->
+    <string name="lbl_investmentstatus_title">New Investment</string>
+
+
+    <!--Withdraw-->
+    <string name="lbl_withdraw_title">Withdraw Funds</string>
+
+    <string name="lbl_invested_amount">Invested Amount:</string>
+    <string name="lbl_withdraw_amount">Withdraw Amount:</string>
+    <string name="lbl_withdraw_date">Withdraw Date:</string>
+    <string name="lbl_cancellation_charge">Cancellation Charge:</string>
+    <string name="lbl_investment_balance">Investment Balance:</string>
+    <string name="lbl_cancel_button">C a n c e l</string>
+    <string name="lbl_withdraw_button">W i t h d r a w</string>
+
+    <!--Withdraw Status-->
+    <string name="lbl_withdraw_title_status">Withdraw Status</string>
+
+
+    <!--Profile-->
+    <string name="lbl_profile_title">Profile</string>
+    <string name="lbl_profile_title_edit">Profile Edit</string>
+
+    <string name="lbl_username">Username: </string>
+    <string name="lbl_account_id">Account Id:</string>
+    <string name="lbl_total_investment">Total Investment:</string>
+
+
+    <!--Earnings-->
+    <string name="lbl_earning_title">Earnings</string>
+
+    <string name="lbl_invested_amt">Invested Amount: </string>
+    <string name="lbl_lastmn_earnings">Last Month Earnings: </string>
+    <string name="lbl_lastyr_earnings">Last Year Earnings: </string>
+    <string name="lbl_est_earnings">Estimated Earnnigs: </string>
+
+
+    <!--Calculator-->
+    <string name="lbl_calculator_title">Calculator</string>
+
+    <!--Notifications-->
+    <string name="lbl_notification_title">Notifications</string>
+
+
+    <!--Settings-->
+    <string name="lbl_settings_title">Setings</string>
+
+    <string name="lbl_network">Network</string>
+    <string name="lbl_only_wifi">Only Wifi </string>
+    <string name="lbl_fly_mode">Fly Mode </string>
+    <string name="lbl_sound">Sound</string>
+    <string name="lbl_silent_mode">Silent Mode </string>
+    <string name="lbl_notification">Notification </string>
+    <string name="lbl_vibration">Vibration </string>
+    <string name="lorum_ipsum">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</string>
+
+
+    <!--Dialog content-->
+
+    <string name="dig_invest_title">Cancel</string>
+    <string name="dig_invest_content">Are you sure to cancel investment?</string>
+
+    <string name="dig_invest_success_title">Congratulations !</string>
+    <string name="dig_invest_success_content">Investment Successful. Please upload Proofs.</string>
+
+    <string name="dig_withdraw_title">Withdraw</string>
+    <string name="dig_withdraw_content">Are you sure to cancel withdraw?</string>
+
+    <string name="dig_logout_title">Logout</string>
+    <string name="dig_logout_content">Are you sure to logout?</string>
+
+    <!--General-->
+    <string name="cnt_ok">Ok</string>
+    <string name="cnt_yes">Yes</string>
+    <string name="cnt_no">No</string>
+    <string name="cnt_pending">Pending</string>
+    <string name="cnt_approved">Approved</string>
+    <string name="cnt_success">Success</string>
+    <string name="cnt_cancel">Cancel</string>
+    <string name="cnt_cancelled">Cancelled</string>
+    <string name="cnt_proof_upload">Proof Upload</string>
+
+    <string name="cnt_invid">InvId: </string>
+    <string name="cnt_withdrawid">WithdrawId: </string>
+    <string name="cnt_amount">Amount: </string>
+
+    <string name="cnt_plan_name">Plan name: </string>
+    <string name="cnt_plan_amt">Amount: </string>
+    <string name="cnt_roi">Rate of Interest: </string>
+
+
+</resources>

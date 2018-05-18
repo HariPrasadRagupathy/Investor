@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">@color/appyellow</color>
+    <color name="colorPrimaryDark">@color/appyellow</color>
+    <color name="colorAccent">@color/appblue</color>
+
+
+    <color name="appscreenbackground">@color/appyellow</color>
+    <color name="drawer_menu_background">@color/appwhite</color>
+    <color name="drawer_menu_item">@color/appblue</color>
+    <color name="menu_textcolor">@color/appblue</color>
+    <color name="burger_menu">@color/appblue</color>
+    <color name="dasboard_menu_text">@color/appblue</color>
+    <color name="dasboard_menu_text_white">@color/appwhite</color>
+    <color name="screen_title_text">@color/appwhite</color>
+    <color name="screen_title_background">@color/appblue</color>
+    <color name="screen_title_border">@color/appgrey</color>
+    <color name="signin_text">@color/appblue</color>
+    <color name="earnings_amt">@color/appgrey</color>
+    <color name="settings_grey">@color/appgrey</color>
+    <color name="settings_text">@color/appblue</color>
+
+
+
+    <!--App colors-->
+    <color name="appwhite">#ffffff</color>
+    <color name="appblack">#000000</color>
+    <color name="appyellow">#fbad02</color>
+    <color name="appred">#df0024</color>
+    <color name="appgreen">#009f3c</color>
+    <color name="appblue">#1794ec</color>
+    <color name="appgrey">#e6eaee</color>
+
+
+
+
+
+
+</resources>
