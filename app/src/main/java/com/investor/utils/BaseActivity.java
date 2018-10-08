@@ -1,17 +1,26 @@
 package com.investor.utils;
 
 import android.app.Dialog;
+import android.app.NotificationManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
+import android.support.v4.app.NotificationCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.Toolbar;
+import android.util.Base64;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
@@ -27,6 +36,7 @@ import com.investor.DashBoard;
 import com.investor.Earnings;
 import com.investor.InvestmentStatus;
 import com.investor.Login;
+import com.investor.ModePayment;
 import com.investor.NewInvestment;
 import com.investor.Notifications;
 import com.investor.Profile;
@@ -34,14 +44,18 @@ import com.investor.R;
 import com.investor.Settings;
 import com.investor.Withdraw;
 import com.investor.Withdraw_status;
+import com.investor.data.shared.SessionManager;
+import com.investor.data.shared.SharedKeys;
 import com.mikhaellopez.circularimageview.CircularImageView;
 
+import java.io.ByteArrayOutputStream;
 import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public abstract class BaseActivity extends AppCompatActivity {
+public abstract class
+BaseActivity extends AppCompatActivity implements ConnectivityReceiver.ConnectivityReceiverListener {
 
     @BindView(R.id.toolbar)
     @Nullable
@@ -51,6 +65,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Nullable
     public TextView cm_tv_titletext;
 
+    public Boolean isInternetConnected = true;
 
     private int view;
 
@@ -78,7 +93,7 @@ public abstract class BaseActivity extends AppCompatActivity {
                     getBaseContext().getResources().getDisplayMetrics());
             setContentView(view);
             ButterKnife.bind(this);
-            if(view!=R.layout.activity_login)
+            if(view!=R.layout.activity_login && view!=R.layout.splash_activity)
             initActionBar(setNavigationDrawer());
             try {
 
@@ -88,8 +103,77 @@ public abstract class BaseActivity extends AppCompatActivity {
             }
 
             intialize();
-
+            isInternetConnected = ConnectivityReceiver.isConnected();
+            Log.e("internet",isInternetConnected+"<!>");
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        // register connection status listener
+        InvestApplication.getInstance().setConnectivityListener(this);
+    }
+
+    @Override
+    public void onNetworkConnectionChanged(boolean isConnected) {
+        Log.e("internet",isConnected+"<>");
+        showSnack(isConnected);
+        isInternetConnected=isConnected;
+
+    }
+
+
+    public boolean checkInternet()
+    {
+// get Connectivity Manager object to check connection
+        ConnectivityManager connec =
+                (ConnectivityManager)getSystemService(getBaseContext().CONNECTIVITY_SERVICE);
+
+        // Check for network connections
+        if ( connec.getNetworkInfo(0).getState() == android.net.NetworkInfo.State.CONNECTED ||
+                connec.getNetworkInfo(0).getState() == android.net.NetworkInfo.State.CONNECTING ||
+                connec.getNetworkInfo(1).getState() == android.net.NetworkInfo.State.CONNECTING ||
+                connec.getNetworkInfo(1).getState() == android.net.NetworkInfo.State.CONNECTED ) {
+
+            // if connected with internet
+
+         //   Toast.makeText(this, " Connected ", Toast.LENGTH_LONG).show();
+            return true;
+
+        } else if (
+                connec.getNetworkInfo(0).getState() == android.net.NetworkInfo.State.DISCONNECTED ||
+                        connec.getNetworkInfo(1).getState() == android.net.NetworkInfo.State.DISCONNECTED  ) {
+
+         //   Toast.makeText(this, " Not Connected ", Toast.LENGTH_LONG).show();
+            return false;
+        }
+        return false;
+    }
+
+
+
+
+    // Showing the status in Snackbar
+    private void showSnack(boolean isConnected) {
+        String message;
+        int color;
+        if (isConnected) {
+            message = "Connected to Internet";
+            color = Color.WHITE;
+        } else {
+            message = "Internet Connection Lost";
+            color = Color.RED;
+        }
+
+        Snackbar snackbar = Snackbar
+                .make(findViewById(android.R.id.content), message, Snackbar.LENGTH_LONG);
+
+        View sbView = snackbar.getView();
+        TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+        textView.setTextColor(color);
+        snackbar.show();
     }
 
 
@@ -195,7 +279,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         final Dialog dialog = new Dialog(this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE); // before
         dialog.setContentView(R.layout.dialog_light);
-        dialog.setCancelable(true);
+        dialog.setCancelable(false);
 
         WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
         lp.copyFrom(dialog.getWindow().getAttributes());
@@ -235,6 +319,8 @@ public abstract class BaseActivity extends AppCompatActivity {
                 switch (moveToActivity) {
                     case 1:
                         moveToSignin();
+                        SessionManager.clearSession(getApplicationContext());
+                        Log.e("shared","session cleared");
                         break;
                     case 2:
                         moveToInvestmentStatus();
@@ -244,6 +330,9 @@ public abstract class BaseActivity extends AppCompatActivity {
                         break;
                     case 4:
                         moveToWithdrawStatus();
+                        break;
+                    case 5:
+                        moveToWithdraw();
                         break;
                 }
                 finish();
@@ -256,6 +345,8 @@ public abstract class BaseActivity extends AppCompatActivity {
                 switch (moveToActivity) {
                     case 1:
                         moveToSignin();
+                        SessionManager.clearSession(getApplicationContext());
+                        Log.e("shared","session cleared");
                         break;
                     case 2:
                         moveToInvestmentStatus();
@@ -265,6 +356,9 @@ public abstract class BaseActivity extends AppCompatActivity {
                         break;
                     case 4:
                         moveToWithdrawStatus();
+                        break;
+                    case 5:
+                        moveToWithdraw();
                         break;
                 }
                 finish();
@@ -280,6 +374,16 @@ public abstract class BaseActivity extends AppCompatActivity {
 
         dialog.show();
         dialog.getWindow().setAttributes(lp);
+    }
+
+    public String encodeImage(Bitmap bm)
+    {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bm.compress(Bitmap.CompressFormat.JPEG,100,baos);
+        byte[] b = baos.toByteArray();
+        String encImage = Base64.encodeToString(b, Base64.DEFAULT);
+
+        return encImage;
     }
 
     public void moveToSignin() {
@@ -341,5 +445,37 @@ public abstract class BaseActivity extends AppCompatActivity {
     public void moveToLogout() {
         showCustomDialog(getResources().getString(R.string.dig_logout_content), getResources().getString(R.string.dig_logout_content), R.drawable.logout, 1, 1);
     }
+
+
+    public void moveToModePayment(String orderId, String planId)
+    {
+        Intent moveToModePayment = new Intent(this, ModePayment.class);
+        moveToModePayment.putExtra("orderId",orderId);
+        moveToModePayment.putExtra("planId",planId);
+        startActivity(moveToModePayment);
+    }
+
+    public void logLargeString(String str) {
+        final int CHUNK_SIZE = 24076;  // Typical max logcat payload.
+        int offset = 0;
+        while (offset + CHUNK_SIZE <= str.length()) {
+            Log.d("upload", str.substring(offset, offset += CHUNK_SIZE));
+        }
+        if (offset < str.length()) {
+            Log.d("upload", str.substring(offset));
+        }
+    }
+
+    public void showshortToast(String msg)
+    {
+        Toast.makeText(getApplicationContext(),msg,Toast.LENGTH_SHORT).show();
+    }
+
+    public void showToast(String msg)
+    {
+        Toast.makeText(getApplicationContext(),msg,Toast.LENGTH_LONG).show();
+    }
+
+
 
 }

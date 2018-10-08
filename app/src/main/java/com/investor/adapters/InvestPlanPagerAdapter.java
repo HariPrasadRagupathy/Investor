@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.investor.R;
+import com.investor.models.DepositHistoryResponse;
 import com.investor.models.InvestmentPlans;
 
 import java.util.ArrayList;
@@ -17,12 +18,14 @@ import java.util.ArrayList;
 public class InvestPlanPagerAdapter extends PagerAdapter {
 
     private Context mContext;
-    private ArrayList<InvestmentPlans> investmentPlans;
+    private ArrayList<InvestmentPlans.Detail> investmentPlans;
 
-    public InvestPlanPagerAdapter(Context context, ArrayList<InvestmentPlans> investmentPlans) {
+    public InvestPlanPagerAdapter(Context context, ArrayList<InvestmentPlans.Detail> investmentPlans) {
         mContext = context;
         this.investmentPlans = investmentPlans;
     }
+
+
 
     @Override
     public int getCount() {
@@ -57,9 +60,9 @@ public class InvestPlanPagerAdapter extends PagerAdapter {
         TextView nip_tv_investment_amount = (TextView) view.findViewById(R.id.nip_tv_investment_amount);
         TextView nip_tv_investment_roi = (TextView) view.findViewById(R.id.nip_tv_investment_roi);
 
-        nip_tv_planname.setText(mContext.getResources().getString(R.string.cnt_plan_name)+investmentPlans.get(position).getInvestPlanName());
-        nip_tv_investment_amount.setText(mContext.getResources().getString(R.string.cnt_plan_amt)+investmentPlans.get(position).getInvestmentAmount());
-        nip_tv_investment_roi.setText(mContext.getResources().getString(R.string.cnt_roi)+investmentPlans.get(position).getInvestmemtROI());
+        nip_tv_planname.setText(mContext.getResources().getString(R.string.cnt_plan_name)+investmentPlans.get(position).getPlanName());
+        nip_tv_investment_amount.setText(mContext.getResources().getString(R.string.cnt_plan_amt)+investmentPlans.get(position).getMinValue()+"-"+investmentPlans.get(position).getMaxValue());
+        nip_tv_investment_roi.setText(mContext.getResources().getString(R.string.cnt_roi)+investmentPlans.get(position).getInterest()+"%");
         return view;
     }
 }

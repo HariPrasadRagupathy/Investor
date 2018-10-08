@@ -12,10 +12,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.investor.InvestmentStatus;
 import com.investor.R;
 import com.investor.Withdraw_status;
-import com.investor.models.InvestmentStatusList;
+import com.investor.models.WithDrawHistoryResponse;
 import com.investor.models.WithdrawStatusList;
 
 import java.util.ArrayList;
@@ -23,7 +22,7 @@ import java.util.ArrayList;
 public class WithDrawStatusAdapter extends RecyclerView.Adapter<WithDrawStatusAdapter.MyViewHolder> {
 
 
-    private final ArrayList<WithdrawStatusList> withdrawStatusList;
+    private final ArrayList<WithDrawHistoryResponse.Detail> withdrawStatusList;
 
     //TextView categoryName;
     ImageView imageUrl;
@@ -31,7 +30,7 @@ public class WithDrawStatusAdapter extends RecyclerView.Adapter<WithDrawStatusAd
     Withdraw_status withdraw_status;
 
 
-    public WithDrawStatusAdapter(ArrayList<WithdrawStatusList> withdrawStatusList, Context context, Withdraw_status withdraw_status) {
+    public WithDrawStatusAdapter(ArrayList<WithDrawHistoryResponse.Detail> withdrawStatusList, Context context, Withdraw_status withdraw_status) {
         this.withdrawStatusList = withdrawStatusList;
         this.context = context;
         this.withdraw_status = withdraw_status;
@@ -51,70 +50,86 @@ public class WithDrawStatusAdapter extends RecyclerView.Adapter<WithDrawStatusAd
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull MyViewHolder holder, final int position) {
 
-        holder.status_id.setText(context.getResources().getString(R.string.cnt_withdrawid)+withdrawStatusList.get(position).getStatus_id());
+        holder.status_id.setText(context.getResources().getString(R.string.cnt_withdrawid)+withdrawStatusList.get(position).getId());
         holder.statusamount.setText(context.getResources().getString(R.string.cnt_amount)+withdrawStatusList.get(position).getAmount());
+        String status_one="";
+        String status_two="";
 
-        if(withdrawStatusList.get(position).getStatus_mode()==1)
+        if(Integer.parseInt(withdrawStatusList.get(position).getStatus())==1)
         {
+
             holder.statustext_ll.setVisibility(View.VISIBLE);
 
             holder.statusbutton_one_ll.setVisibility(View.GONE);
             holder.statusbutton_two_ll.setVisibility(View.GONE);
-            holder.statustext.setText(withdrawStatusList.get(position).getStatus_one());
+            holder.statustext.setText(context.getResources().getString(R.string.cnt_approved));
 
             //setting Color
-            if(withdrawStatusList.get(position).getStatus_one().equalsIgnoreCase("pending"))
+            /*if(status_one.equalsIgnoreCase("pending"))
             holder.statustext.setBackgroundTintList(context.getResources().getColorStateList(R.color.appyellow));
-            else if(withdrawStatusList.get(position).getStatus_one().equalsIgnoreCase("cancelled"))
+            else if(status_one.equalsIgnoreCase("cancelled"))
                 holder.statustext.setBackgroundTintList(context.getResources().getColorStateList(R.color.appred));
-            else if(withdrawStatusList.get(position).getStatus_one().equalsIgnoreCase("approved"))
+            else if(status_one.equalsIgnoreCase("approved"))*/
                 holder.statustext.setBackgroundTintList(context.getResources().getColorStateList(R.color.appgreen));
-            else if(withdrawStatusList.get(position).getStatus_one().equalsIgnoreCase("Success"))
-                holder.statustext.setBackgroundTintList(context.getResources().getColorStateList(R.color.appblue));
+           /* else if(status_one.equalsIgnoreCase("Success"))
+                holder.statustext.setBackgroundTintList(context.getResources().getColorStateList(R.color.appblue));*/
         }
-        else if(withdrawStatusList.get(position).getStatus_mode()==2)
+        else if(Integer.parseInt(withdrawStatusList.get(position).getStatus())==0)
         {
+
             holder.statustext_ll.setVisibility(View.VISIBLE);
             holder.statusbutton_one_ll.setVisibility(View.VISIBLE);
             holder.statusbutton_two_ll.setVisibility(View.GONE);
-            holder.statustext.setText(withdrawStatusList.get(position).getStatus_one());
-            holder.statusbutton_one.setText(withdrawStatusList.get(position).getStatus_two());
+            holder.statustext.setText(context.getResources().getString(R.string.cnt_pending));
+            holder.statusbutton_one.setText(context.getResources().getString(R.string.cnt_cancel));
             holder.statustext.setBackgroundTintList(context.getResources().getColorStateList(R.color.appyellow));
             holder.statusbutton_one.setBackgroundTintList(context.getResources().getColorStateList(R.color.appred));
 
             holder.statusbutton_one.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    withdraw_status.showCustomDialog(context.getResources().getString(R.string.dig_withdraw_title),context.getResources().getString(R.string.dig_withdraw_content),R.drawable.happy,1,3);
+                    withdraw_status.showCustomWithdrawDialog(context.getResources().getString(R.string.dig_withdraw_title),context.getResources().getString(R.string.dig_withdraw_content),R.drawable.happy,1,3,withdrawStatusList.get(position).getId());
                 }
             });
         }
-        else if(withdrawStatusList.get(position).getStatus_mode()==3)
+
+        else if(Integer.parseInt(withdrawStatusList.get(position).getStatus())==2)
         {
-            holder.statustext_ll.setVisibility(View.GONE);
-            holder.statusbutton_one_ll.setVisibility(View.VISIBLE);
-            holder.statusbutton_two_ll.setVisibility(View.VISIBLE);
-            holder.statusbutton_one.setText(withdrawStatusList.get(position).getStatus_one());
-            holder.statusbutton_two.setText(withdrawStatusList.get(position).getStatus_two());
-            holder.statusbutton_one.setBackgroundTintList(context.getResources().getColorStateList(R.color.appblue));
-            holder.statusbutton_two.setBackgroundTintList(context.getResources().getColorStateList(R.color.appred));
+            holder.statustext_ll.setVisibility(View.VISIBLE);
 
-            holder.statusbutton_one.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Toast.makeText(context,"pending implementation",Toast.LENGTH_LONG).show();
-                }
-            });
+            holder.statusbutton_one_ll.setVisibility(View.GONE);
+            holder.statusbutton_two_ll.setVisibility(View.GONE);
+            holder.statustext.setText(context.getResources().getString(R.string.cnt_success));
 
+            //setting Color
+            /*if(status_one.equalsIgnoreCase("pending"))
+            holder.statustext.setBackgroundTintList(context.getResources().getColorStateList(R.color.appyellow));
+            else if(status_one.equalsIgnoreCase("cancelled"))
+                holder.statustext.setBackgroundTintList(context.getResources().getColorStateList(R.color.appred));
+            else if(status_one.equalsIgnoreCase("approved"))*/
+            holder.statustext.setBackgroundTintList(context.getResources().getColorStateList(R.color.appblue));
+           /* else if(status_one.equalsIgnoreCase("Success"))
+                holder.statustext.setBackgroundTintList(context.getResources().getColorStateList(R.color.appblue));*/
+        }
+        else
+        {
+            holder.statustext_ll.setVisibility(View.VISIBLE);
 
-            holder.statusbutton_two.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    withdraw_status.showCustomDialog("Cancel","Are you sure to cancel Investment?",R.drawable.cancel_investment,1,3);
-                }
-            });
+            holder.statusbutton_one_ll.setVisibility(View.GONE);
+            holder.statusbutton_two_ll.setVisibility(View.GONE);
+            holder.statustext.setText(context.getResources().getString(R.string.cnt_cancelled));
+
+            //setting Color
+            /*if(status_one.equalsIgnoreCase("pending"))
+            holder.statustext.setBackgroundTintList(context.getResources().getColorStateList(R.color.appyellow));
+            else if(status_one.equalsIgnoreCase("cancelled"))
+                holder.statustext.setBackgroundTintList(context.getResources().getColorStateList(R.color.appred));
+            else if(status_one.equalsIgnoreCase("approved"))*/
+            holder.statustext.setBackgroundTintList(context.getResources().getColorStateList(R.color.appred));
+           /* else if(status_one.equalsIgnoreCase("Success"))
+                holder.statustext.setBackgroundTintList(context.getResources().getColorStateList(R.color.appblue));*/
         }
 
     }

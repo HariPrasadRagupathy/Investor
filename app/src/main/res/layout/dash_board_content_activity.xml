@@ -46,6 +46,7 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/da_tv_tot_investment"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="10000.00 USD"
@@ -86,6 +87,7 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/dba_tv_tot_earnings"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="2543.00 USD"
@@ -385,7 +387,7 @@
                            android:id="@+id/dba_tv_pendinginvest"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/db_menu_pending_Investment"
+                            android:text="@string/menu_investmentstatus"
                             android:singleLine="true"
                             android:ellipsize="marquee"
                             android:marqueeRepeatLimit="marquee_forever"
@@ -437,7 +439,7 @@
                             android:id="@+id/dba_tv_pendingwithdraw"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/db_menu_pending_withdraw"
+                            android:text="@string/menu_withdrawstatus"
                             android:textColor="@color/dasboard_menu_text"
                             android:singleLine="true"
                             android:ellipsize="marquee"

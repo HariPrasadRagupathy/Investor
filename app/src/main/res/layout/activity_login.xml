@@ -59,6 +59,7 @@
                     android:textAppearance="@style/Base.TextAppearance.AppCompat.Caption" />
 
                 <android.support.design.widget.TextInputEditText
+                    android:id="@+id/la_et_username"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="-4dp"
@@ -82,6 +83,7 @@
                     android:textAppearance="@style/Base.TextAppearance.AppCompat.Caption" />
 
                 <android.support.design.widget.TextInputEditText
+                    android:id="@+id/la_et_password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="-4dp"

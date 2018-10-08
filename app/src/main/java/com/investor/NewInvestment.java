@@ -3,6 +3,8 @@ package com.investor;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -15,7 +17,10 @@ import android.widget.Toast;
 
 import com.investor.adapters.InvestPlanPagerAdapter;
 import com.investor.models.InvestmentPlans;
+import com.investor.presenter.LoginPresenter;
+import com.investor.presenter.NewInvestPresenter;
 import com.investor.utils.BaseActivity;
+import com.investor.view.NewInvestContractor;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -27,7 +32,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class NewInvestment extends BaseActivity {
+public class NewInvestment extends BaseActivity implements NewInvestContractor.view {
 
 
     @BindView(R.id.nia_vp_investmentpager)
@@ -46,6 +51,9 @@ public class NewInvestment extends BaseActivity {
     TextView niaTvCancelCharges;
     @BindView(R.id.nia_bt_proceed)
     Button niaBtProceed;
+    private NewInvestPresenter presenter;
+    private ArrayList<InvestmentPlans.Detail> planDetails;
+    private boolean iscalculated = false;
 
     @Override
     protected int setLayout() {
@@ -69,11 +77,36 @@ public class NewInvestment extends BaseActivity {
     }
 
     private void initComponents() {
+
+        presenter = new NewInvestPresenter(this, this);
+
+        niaEtAmount.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                iscalculated = false;
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
     }
 
     private void setContent() {
-        setInvestmentPlan();
-        setDuration();
+        if (checkInternet()) {
+            presenter.investmentPlans();
+
+            //   setInvestmentPlan();
+            setDuration();
+        } else
+            showCustomDialog("No Internet :(","Please check Your Internet connection!!",R.drawable.no_internet,2,7);
     }
 
     private void setDuration() {
@@ -114,20 +147,49 @@ public class NewInvestment extends BaseActivity {
     }
 
     private void setInvestmentPlan() {
-        ArrayList<InvestmentPlans> investmentPlans = new ArrayList<InvestmentPlans>();
+       /* ArrayList<InvestmentPlans> investmentPlans = new ArrayList<InvestmentPlans>();
         investmentPlans.add(new InvestmentPlans("Plan One", "1000 USD", "2.34%"));
         investmentPlans.add(new InvestmentPlans("Plan Two", "4000 USD", "1.14%"));
         investmentPlans.add(new InvestmentPlans("Plan Three", "3000 USD", "1.34%"));
         Log.e("investment", "enter");
         InvestPlanPagerAdapter investPlanPagerAdapter = new InvestPlanPagerAdapter(getApplicationContext(), investmentPlans);
         investmentPlanpager.setAdapter(investPlanPagerAdapter);
-        investmentPlanpager.setCurrentItem(0);
+        investmentPlanpager.setCurrentItem(0);*/
     }
+
 
     @OnClick(R.id.nia_bt_proceed)
     public void moveToConfirmInvestment() {
-        Intent moveToConfirmInvestment = new Intent(this, Confirm_Investment.class);
-        startActivity(moveToConfirmInvestment);
+        if (!niaEtAmount.getText().toString().equals("")) {
+            if ((Double.parseDouble(niaEtAmount.getText().toString()) >= Double.parseDouble(planDetails.get(investmentPlanpager.getCurrentItem()).getMinValue())) && (Double.parseDouble(niaEtAmount.getText().toString()) <= Double.parseDouble(planDetails.get(investmentPlanpager.getCurrentItem()).getMaxValue()))) {
+                if (iscalculated) {
+                    Intent moveToConfirmInvestment = new Intent(this, Confirm_Investment.class);
+                    moveToConfirmInvestment.putExtra("plan_id", planDetails.get(investmentPlanpager.getCurrentItem()).getId());
+                    moveToConfirmInvestment.putExtra("plan_name", planDetails.get(investmentPlanpager.getCurrentItem()).getPlanName());
+                    moveToConfirmInvestment.putExtra("amount_range", planDetails.get(investmentPlanpager.getCurrentItem()).getMinValue() + "-" + planDetails.get(investmentPlanpager.getCurrentItem()).getMaxValue());
+                    moveToConfirmInvestment.putExtra("interest_rate", planDetails.get(investmentPlanpager.getCurrentItem()).getInterest() + "%");
+                    moveToConfirmInvestment.putExtra("invest_amount", niaEtAmount.getText().toString());
+                    moveToConfirmInvestment.putExtra("monthly_profit", niaTvMonthlyProfit.getText().toString());
+                    moveToConfirmInvestment.putExtra("cancel_charge", niaTvCancelCharges.getText().toString());
+                    startActivity(moveToConfirmInvestment);
+                } else
+                    showToast("Please hit calculate once !!");
+            } else
+                showToast("Please enter amount within plan investment range!!");
+        } else
+            showToast("Please Enter Amount !!");
+    }
+
+
+    @OnClick(R.id.nia_bt_calculate)
+    public void calculateInvestment() {
+
+        if (!niaEtAmount.getText().toString().equals("")) {
+            presenter.calculateMonthtlyProfit(Long.parseLong(niaEtAmount.getText().toString()), Long.parseLong(planDetails.get(investmentPlanpager.getCurrentItem()).getInterest()));
+            iscalculated = true;
+        } else
+            showToast("Please Enter Amount !!");
+
     }
 
     @OnClick(R.id.nia_iv_investmnet_left)
@@ -146,5 +208,19 @@ public class NewInvestment extends BaseActivity {
         int tab = investmentPlanpager.getCurrentItem();
         tab++;
         investmentPlanpager.setCurrentItem(tab);
+    }
+
+    @Override
+    public void investmentPlans(ArrayList<InvestmentPlans.Detail> planDetails) {
+        this.planDetails = planDetails;
+        InvestPlanPagerAdapter investPlanPagerAdapter = new InvestPlanPagerAdapter(getApplicationContext(), planDetails);
+        investmentPlanpager.setAdapter(investPlanPagerAdapter);
+        investmentPlanpager.setCurrentItem(0);
+    }
+
+    @Override
+    public void montlyProfit(double amount) {
+        niaTvMonthlyProfit.setText(String.format("%.2f", amount) + " EUR");
+        niaTvCancelCharges.setText("0.0 EUR");
     }
 }

@@ -210,7 +210,7 @@
                     android:textSize="16sp" />
 
                 <TextView
-                    android:id="@+id/pa_tv__total_investment"
+                    android:id="@+id/pa_tv_total_invest"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"

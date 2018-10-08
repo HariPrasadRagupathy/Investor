@@ -33,11 +33,49 @@
             android:layout_height="match_parent"
 
             android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/wa_ll_investment_plan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/appgrey"
+                android:orientation="horizontal"
+                android:weightSum="100">
+
+                <ImageView
+                    android:id="@+id/wa_iv_investmnet_left"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="10"
+                    android:src="@drawable/ic_keyboard_arrow_left" />
+
+                <android.support.v4.view.ViewPager
+                    android:id="@+id/wa_vp_investmentpager"
+                    android:layout_width="0dp"
+                    android:layout_height="100dp"
+                    android:layout_weight="80"
+                    android:paddingLeft="9dp"
+                    android:paddingRight="9dp">
+
+
+                </android.support.v4.view.ViewPager>
+
+                <ImageView
+                    android:id="@+id/wa_iv_investmnet_right"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="10"
+                    android:src="@drawable/ic_keyboard_arrow_right" />
+
+            </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:orientation="horizontal"
+
                 android:paddingLeft="10dp"
                 android:paddingRight="20dp">
 
@@ -94,6 +132,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
                 android:orientation="horizontal"
+                android:visibility="gone"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp">
 

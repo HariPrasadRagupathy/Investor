@@ -9,14 +9,16 @@ import com.investor.adapters.InvestmentStatusAdapter;
 import com.investor.adapters.NotificationAdapter;
 import com.investor.models.InvestmentStatusList;
 import com.investor.models.NotificationList;
+import com.investor.presenter.NotificationsPresenter;
 import com.investor.utils.BaseActivity;
+import com.investor.view.NotificationsContractor;
 
 import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class Notifications extends BaseActivity {
+public class Notifications extends BaseActivity implements NotificationsContractor.view {
 
     @BindView(R.id.na_rv_notificationlist)
     RecyclerView naRvNotificationlist;
@@ -24,6 +26,7 @@ public class Notifications extends BaseActivity {
     private static RecyclerView.Adapter notificationStatusAdapter;
     private RecyclerView.LayoutManager layoutManager;
     private ArrayList<NotificationList> notificationList;
+    private NotificationsPresenter presenter;
 
     @Override
     protected int setLayout() {
@@ -43,12 +46,16 @@ public class Notifications extends BaseActivity {
     @Override
     protected void intialize() {
 
+        presenter = new NotificationsPresenter(this, this);
+        presenter.getNotificationList();
+      //  setContent();
 
-        setContent();
 
     }
 
     private void setContent() {
+        presenter.getNotificationList();
+
         naRvNotificationlist.setHasFixedSize(true);
 
         layoutManager = new LinearLayoutManager(this);
@@ -57,13 +64,27 @@ public class Notifications extends BaseActivity {
 
 
         notificationList = new ArrayList<NotificationList>();
-        notificationList.add(new NotificationList(R.drawable.profile_3x,"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.","Today"));
-        notificationList.add(new NotificationList(R.drawable.profile_3x,"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.","Today"));
-        notificationList.add(new NotificationList(R.drawable.profile_3x,"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.","Today"));
-        notificationList.add(new NotificationList(R.drawable.profile_3x,"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.","Today"));
-        notificationStatusAdapter = new NotificationAdapter(notificationList, getApplicationContext(),this);
+        notificationList.add(new NotificationList(R.drawable.profile_3x, "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.", "Today"));
+        notificationList.add(new NotificationList(R.drawable.profile_3x, "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.", "Today"));
+        notificationList.add(new NotificationList(R.drawable.profile_3x, "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.", "Today"));
+        notificationList.add(new NotificationList(R.drawable.profile_3x, "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.", "Today"));
+        notificationStatusAdapter = new NotificationAdapter(notificationList, getApplicationContext(), this);
         naRvNotificationlist.setAdapter(notificationStatusAdapter);
     }
 
 
+    @Override
+    public void notificationList(ArrayList<NotificationList> notifications) {
+
+
+        naRvNotificationlist.setHasFixedSize(true);
+
+        layoutManager = new LinearLayoutManager(this);
+        naRvNotificationlist.setLayoutManager(layoutManager);
+        naRvNotificationlist.setItemAnimator(new DefaultItemAnimator());
+
+
+        notificationStatusAdapter = new NotificationAdapter(notifications, getApplicationContext(), this);
+        naRvNotificationlist.setAdapter(notificationStatusAdapter);
+    }
 }

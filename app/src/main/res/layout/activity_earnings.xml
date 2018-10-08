@@ -71,6 +71,33 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:text="@string/lbl_total_earnings"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/ea_tv_total_earnings"
+                    android:layout_marginTop="5dp"
+                    android:paddingTop="2dp"
+                    android:paddingBottom="2dp"
+                    android:paddingLeft="2dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/zeroamt"
+                    android:background="@color/earnings_amt"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:orientation="vertical"
+                android:paddingLeft="10dp"
+                android:paddingRight="20dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:text="@string/lbl_lastmn_earnings"
                     android:textSize="16sp" />
 
@@ -119,6 +146,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:orientation="vertical"
+                android:visibility="gone"
                 android:paddingLeft="10dp"
                 android:paddingRight="20dp">
 

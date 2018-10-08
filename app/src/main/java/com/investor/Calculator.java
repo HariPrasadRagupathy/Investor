@@ -1,30 +1,47 @@
 package com.investor;
 
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.investor.adapters.InvestPlanPagerAdapter;
 import com.investor.models.InvestmentPlans;
+import com.investor.presenter.NewInvestPresenter;
 import com.investor.utils.BaseActivity;
+import com.investor.view.NewInvestContractor;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class Calculator extends BaseActivity {
-    @BindView(R.id.nia_vp_investmentpager)
+public class Calculator extends BaseActivity implements NewInvestContractor.view {
+    @BindView(R.id.ca_vp_investmentpager)
     ViewPager investmentPlanpager;
 
-    @BindView(R.id.nia_sp_duration)
-    Spinner niaSpDuration;
+    @BindView(R.id.ca_sp_duration)
+    Spinner caSpDuration;
+    @BindView(R.id.ca_bt_calculate)
+    Button caBtCalculate;
+    @BindView(R.id.ca_et_amount)
+    EditText caEtAmount;
+    @BindView(R.id.ca_tv_total_profit)
+    TextView caTvTotalProfit;
+    @BindView(R.id.ca_tv_monthly_profit)
+    TextView caTvMonthlyProfit;
+
+    int duration = 1;
+    private NewInvestPresenter presenter;
+    private ArrayList<InvestmentPlans.Detail> planDetails;
 
     @Override
     protected int setLayout() {
@@ -43,6 +60,8 @@ public class Calculator extends BaseActivity {
 
     @Override
     protected void intialize() {
+
+        presenter = new NewInvestPresenter(this, this);
         setDuration();
         setInvestmentPlan();
     }
@@ -62,17 +81,28 @@ public class Calculator extends BaseActivity {
         list.add("6");
         list.add("7");
         list.add("8");
-        list.add("9");
+        list.add("10");
+        list.add("11");
+        list.add("12");
+        list.add("13");
+        list.add("14");
+        list.add("15");
+        list.add("16");
+        list.add("17");
+        list.add("18");
+
 
         final ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_spinner_item, list);
 
-        niaSpDuration.setAdapter(dataAdapter);
+        caSpDuration.setAdapter(dataAdapter);
 
-        niaSpDuration.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        caSpDuration.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view,
                                        int position, long id) {
+
+                duration = Integer.parseInt(list.get(position));
 
             }
 
@@ -84,23 +114,27 @@ public class Calculator extends BaseActivity {
         });
 
         // Apply the adapter to the spinner
-        niaSpDuration.setAdapter(dataAdapter);
+        caSpDuration.setAdapter(dataAdapter);
     }
 
 
     private void setInvestmentPlan() {
-        ArrayList<InvestmentPlans> investmentPlans = new ArrayList<InvestmentPlans>();
+        if (checkInternet())
+            presenter.investmentPlans();
+        else
+            showCustomDialog("No Internet :(", "Please check Your Internet connection!!", R.drawable.no_internet, 2, 7);
+       /* ArrayList<InvestmentPlans> investmentPlans = new ArrayList<InvestmentPlans>();
         investmentPlans.add(new InvestmentPlans("Plan One", "1000 USD", "2.34%"));
         investmentPlans.add(new InvestmentPlans("Plan Two", "4000 USD", "1.14%"));
         investmentPlans.add(new InvestmentPlans("Plan Three", "3000 USD", "1.34%"));
         Log.e("investment", "enter");
         InvestPlanPagerAdapter investPlanPagerAdapter = new InvestPlanPagerAdapter(getApplicationContext(), investmentPlans);
         investmentPlanpager.setAdapter(investPlanPagerAdapter);
-        investmentPlanpager.setCurrentItem(0);
+        investmentPlanpager.setCurrentItem(0);*/
     }
 
 
-    @OnClick(R.id.nia_iv_investmnet_left)
+    @OnClick(R.id.ca_iv_investmnet_left)
     public void investmentPlanLeft() {
         int tab = investmentPlanpager.getCurrentItem();
         if (tab > 0) {
@@ -111,11 +145,37 @@ public class Calculator extends BaseActivity {
         }
     }
 
-    @OnClick(R.id.nia_iv_investmnet_right)
+    @OnClick(R.id.ca_iv_investmnet_right)
     public void investmentPlanRight() {
         int tab = investmentPlanpager.getCurrentItem();
         tab++;
         investmentPlanpager.setCurrentItem(tab);
     }
+
+    @Override
+    public void investmentPlans(ArrayList<InvestmentPlans.Detail> planDetails) {
+        this.planDetails = planDetails;
+        InvestPlanPagerAdapter investPlanPagerAdapter = new InvestPlanPagerAdapter(getApplicationContext(), planDetails);
+        investmentPlanpager.setAdapter(investPlanPagerAdapter);
+        investmentPlanpager.setCurrentItem(0);
+    }
+
+    @Override
+    public void montlyProfit(double amount) {
+
+        caTvMonthlyProfit.setText(String.format("%.2f", amount) + "EUR");
+        caTvTotalProfit.setText(String.format("%.2f", (amount * duration)) + " EUR");
+
+    }
+
+
+    @OnClick(R.id.ca_bt_calculate)
+    public void calculate() {
+        if (!caEtAmount.getText().toString().equals("")) {
+            presenter.calculateMonthtlyProfit(Double.parseDouble(caEtAmount.getText().toString()), Double.parseDouble(planDetails.get(investmentPlanpager.getCurrentItem()).getInterest()));
+        } else
+            showToast("Please Enter Amount !!");
+    }
+
 
 }

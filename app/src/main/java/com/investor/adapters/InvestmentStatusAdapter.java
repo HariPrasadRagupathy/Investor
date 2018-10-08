@@ -14,14 +14,17 @@ import android.widget.Toast;
 
 import com.investor.InvestmentStatus;
 import com.investor.R;
+import com.investor.models.DepositHistoryResponse;
 import com.investor.models.InvestmentStatusList;
+import com.theartofdev.edmodo.cropper.CropImage;
+import com.theartofdev.edmodo.cropper.CropImageView;
 
 import java.util.ArrayList;
 
 public class InvestmentStatusAdapter extends RecyclerView.Adapter<InvestmentStatusAdapter.MyViewHolder> {
 
 
-    private final ArrayList<InvestmentStatusList> investmentStatusList;
+    private final ArrayList<DepositHistoryResponse.Detail> investmentStatusList;
 
     //TextView categoryName;
     ImageView imageUrl;
@@ -29,7 +32,7 @@ public class InvestmentStatusAdapter extends RecyclerView.Adapter<InvestmentStat
     InvestmentStatus investmentStatus;
 
 
-    public InvestmentStatusAdapter(ArrayList<InvestmentStatusList> investmentStatusList, Context context, InvestmentStatus investmentStatus) {
+    public InvestmentStatusAdapter(ArrayList<DepositHistoryResponse.Detail> investmentStatusList, Context context, InvestmentStatus investmentStatus) {
         this.investmentStatusList = investmentStatusList;
         this.context = context;
         this.investmentStatus = investmentStatus;
@@ -49,51 +52,66 @@ public class InvestmentStatusAdapter extends RecyclerView.Adapter<InvestmentStat
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull MyViewHolder holder, final int position) {
 
-        holder.status_id.setText(context.getResources().getString(R.string.cnt_invid)+investmentStatusList.get(position).getStatus_id());
+        holder.status_id.setText(context.getResources().getString(R.string.cnt_invid)+investmentStatusList.get(position).getId());
         holder.statusamount.setText(context.getResources().getString(R.string.cnt_amount)+investmentStatusList.get(position).getAmount());
 
-        if(investmentStatusList.get(position).getStatus_mode()==1)
+        if(Integer.parseInt(investmentStatusList.get(position).getStatus())==1)
         {
             holder.statustext_ll.setVisibility(View.VISIBLE);
 
             holder.statusbutton_one_ll.setVisibility(View.GONE);
             holder.statusbutton_two_ll.setVisibility(View.GONE);
-            holder.statustext.setText(investmentStatusList.get(position).getStatus_one());
+            holder.statustext.setText(context.getResources().getString(R.string.cnt_approved));
 
             //setting Color
-            if(investmentStatusList.get(position).getStatus_one().equalsIgnoreCase("pending"))
+          /*  if(investmentStatusList.get(position).getStatus_one().equalsIgnoreCase("pending"))
             holder.statustext.setBackgroundTintList(context.getResources().getColorStateList(R.color.appyellow));
             else if(investmentStatusList.get(position).getStatus_one().equalsIgnoreCase("cancelled"))
-                holder.statustext.setBackgroundTintList(context.getResources().getColorStateList(R.color.appred));
-            else if(investmentStatusList.get(position).getStatus_one().equalsIgnoreCase("approved"))
+                holder.statustext.setBackgroundTintList(context.getResources().getColorStateList(R.color.appred));*/
+           // else if(investmentStatusList.get(position).getStatus_one().equalsIgnoreCase("approved"))
                 holder.statustext.setBackgroundTintList(context.getResources().getColorStateList(R.color.appgreen));
-            else if(investmentStatusList.get(position).getStatus_one().equalsIgnoreCase("Success"))
-                holder.statustext.setBackgroundTintList(context.getResources().getColorStateList(R.color.appblue));
+           /* else if(investmentStatusList.get(position).getStatus_one().equalsIgnoreCase("Success"))
+                holder.statustext.setBackgroundTintList(context.getResources().getColorStateList(R.color.appblue));*/
         }
-        else if(investmentStatusList.get(position).getStatus_mode()==2)
+        else if(Integer.parseInt(investmentStatusList.get(position).getStatus())==2)
         {
             holder.statustext_ll.setVisibility(View.VISIBLE);
-            holder.statusbutton_one_ll.setVisibility(View.VISIBLE);
+
+            holder.statusbutton_one_ll.setVisibility(View.GONE);
             holder.statusbutton_two_ll.setVisibility(View.GONE);
-            holder.statustext.setText(investmentStatusList.get(position).getStatus_one());
-            holder.statusbutton_one.setText(investmentStatusList.get(position).getStatus_two());
+            holder.statustext.setText(context.getResources().getString(R.string.cnt_pending));
+
+            //setting Color
+          /*  if(investmentStatusList.get(position).getStatus_one().equalsIgnoreCase("pending"))
+            holder.statustext.setBackgroundTintList(context.getResources().getColorStateList(R.color.appyellow));
+            else if(investmentStatusList.get(position).getStatus_one().equalsIgnoreCase("cancelled"))
+                holder.statustext.setBackgroundTintList(context.getResources().getColorStateList(R.color.appred));*/
+            // else if(investmentStatusList.get(position).getStatus_one().equalsIgnoreCase("approved"))
+            holder.statustext.setBackgroundTintList(context.getResources().getColorStateList(R.color.appyellow));
+           /* else if(investmentStatusList.get(position).getStatus_one().equalsIgnoreCase("Success"))
+                holder.statustext.setBackgroundTintList(context.getResources().getColorStateList(R.color.appblue));*/
         }
-        else if(investmentStatusList.get(position).getStatus_mode()==3)
+        else if(Integer.parseInt(investmentStatusList.get(position).getStatus())==0)
         {
             holder.statustext_ll.setVisibility(View.GONE);
             holder.statusbutton_one_ll.setVisibility(View.VISIBLE);
             holder.statusbutton_two_ll.setVisibility(View.VISIBLE);
-            holder.statusbutton_one.setText(investmentStatusList.get(position).getStatus_one());
-            holder.statusbutton_two.setText(investmentStatusList.get(position).getStatus_two());
+            holder.statusbutton_one.setText(context.getResources().getString(R.string.cnt_proof_upload));
+            holder.statusbutton_two.setText(context.getResources().getString(R.string.cnt_cancel));
             holder.statusbutton_one.setBackgroundTintList(context.getResources().getColorStateList(R.color.appblue));
             holder.statusbutton_two.setBackgroundTintList(context.getResources().getColorStateList(R.color.appred));
 
             holder.statusbutton_one.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(context,"pending implementation",Toast.LENGTH_LONG).show();
+                   /* CropImage.activity()
+                            .setGuidelines(CropImageView.Guidelines.ON)
+                            .start(investmentStatus);*/
+                    investmentStatus.moveToModePayment(investmentStatusList.get(position).getId().toString(),investmentStatusList.get(position).getPlanId());
+
+                //    Toast.makeText(context,"pending implementation",Toast.LENGTH_LONG).show();
                 }
             });
 
@@ -101,9 +119,27 @@ public class InvestmentStatusAdapter extends RecyclerView.Adapter<InvestmentStat
             holder.statusbutton_two.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    investmentStatus.showCustomDialog(context.getResources().getString(R.string.dig_invest_title),context.getResources().getString(R.string.dig_invest_content),R.drawable.cancel_investment,1,3);
+                    investmentStatus.showCustomInvestDialog(context.getResources().getString(R.string.dig_invest_title),context.getResources().getString(R.string.dig_invest_content),R.drawable.cancel_investment,1,3,investmentStatusList.get(position).getId().toString());
                 }
             });
+        }
+        else
+        {
+            holder.statustext_ll.setVisibility(View.VISIBLE);
+
+            holder.statusbutton_one_ll.setVisibility(View.GONE);
+            holder.statusbutton_two_ll.setVisibility(View.GONE);
+            holder.statustext.setText(context.getResources().getString(R.string.cnt_cancelled));
+
+            //setting Color
+          /*  if(investmentStatusList.get(position).getStatus_one().equalsIgnoreCase("pending"))
+            holder.statustext.setBackgroundTintList(context.getResources().getColorStateList(R.color.appyellow));
+            else if(investmentStatusList.get(position).getStatus_one().equalsIgnoreCase("cancelled"))
+                holder.statustext.setBackgroundTintList(context.getResources().getColorStateList(R.color.appred));*/
+            // else if(investmentStatusList.get(position).getStatus_one().equalsIgnoreCase("approved"))
+            holder.statustext.setBackgroundTintList(context.getResources().getColorStateList(R.color.appred));
+           /* else if(investmentStatusList.get(position).getStatus_one().equalsIgnoreCase("Success"))
+                holder.statustext.setBackgroundTintList(context.getResources().getColorStateList(R.color.appblue));*/
         }
 
     }
@@ -135,4 +171,7 @@ public class InvestmentStatusAdapter extends RecyclerView.Adapter<InvestmentStat
             statusbutton_two_ll = (LinearLayout) itemView.findViewById(R.id.li_ll_bt_two);
         }
     }
+
+
+
 }

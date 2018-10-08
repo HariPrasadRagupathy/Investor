@@ -28,7 +28,7 @@
 
     <!--Login-->
     <string name="lbl_login_title">SIGN IN</string>
-    <string name="lbl_login_username">USERNAME</string>
+    <string name="lbl_login_username">MOBILE NUMBER</string>
     <string name="lbl_login_password">PASSWORD</string>
     <string name="lbl_login_signin">SIGN IN</string>
     <string name="lbl_login_newuser">New user?</string>
@@ -44,7 +44,7 @@
     <string name="lbl_confirminvestment_title">Confirm Investment</string>
 
     <string name="lbl_amount">Amount:</string>
-    <string name="lbl_duration">Duration:</string>
+    <string name="lbl_duration">Duration(in months):</string>
     <string name="lbl_total_profit">Total Profit:</string>
     <string name="lbl_monthly_profit">Monthly Profit:</string>
     <string name="lbl_cancel_charge">Cancellation charge:</string>
@@ -52,8 +52,8 @@
     <string name="lbl_calculate_button">C a l c u l a t e</string>
     <string name="lbl_review_button">R e v i e w</string>
     <string name="lbl_confirm_button">C o n f i r m</string>
-    <string name="zeroamt">0.0 USD</string>
-    <string name="amtzeroamt">Amount: 0.0 USD</string>
+    <string name="zeroamt">0.0 EUR</string>
+    <string name="amtzeroamt">Amount: 0.0 EUR</string>
     <string name="defaultId">D Id:</string>
     <string name="defaultStatus">Status</string>
 
@@ -89,6 +89,7 @@
     <string name="lbl_earning_title">Earnings</string>
 
     <string name="lbl_invested_amt">Invested Amount: </string>
+    <string name="lbl_total_earnings">Total Earnings: </string>
     <string name="lbl_lastmn_earnings">Last Month Earnings: </string>
     <string name="lbl_lastyr_earnings">Last Year Earnings: </string>
     <string name="lbl_est_earnings">Estimated Earnnigs: </string>
@@ -128,6 +129,18 @@
     <string name="dig_logout_title">Logout</string>
     <string name="dig_logout_content">Are you sure to logout?</string>
 
+
+    <!--Payment Mode -->
+    <string name="pm_fileUpload">Click to upload</string>
+    <string name="pm_paymentmethod">Select Payment Method: </string>
+    <string name="pm_reference_no">Reference Number: </string>
+    <string name="pm_proofupload">Proof Upload: </string>
+    <string name="pm_submit">Submit</string>
+
+    <!--Notifiy -->
+
+    <string name="notify_remove">X Remove</string>
+
     <!--General-->
     <string name="cnt_ok">Ok</string>
     <string name="cnt_yes">Yes</string>
@@ -146,6 +159,7 @@
     <string name="cnt_plan_name">Plan name: </string>
     <string name="cnt_plan_amt">Amount: </string>
     <string name="cnt_roi">Rate of Interest: </string>
+    <string name="cnt_invdate">Invested Date: </string>
 
 
 </resources>

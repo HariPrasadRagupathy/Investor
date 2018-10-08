@@ -35,7 +35,7 @@
             android:orientation="vertical">
 
             <LinearLayout
-                android:id="@+id/nia_ll_investment_plan"
+                android:id="@+id/ca_ll_investment_plan"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/appgrey"
@@ -43,7 +43,7 @@
                 android:weightSum="100">
 
                 <ImageView
-                    android:id="@+id/nia_iv_investmnet_left"
+                    android:id="@+id/ca_iv_investmnet_left"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -51,7 +51,7 @@
                     android:src="@drawable/ic_keyboard_arrow_left" />
 
                 <android.support.v4.view.ViewPager
-                    android:id="@+id/nia_vp_investmentpager"
+                    android:id="@+id/ca_vp_investmentpager"
                     android:layout_width="0dp"
                     android:layout_height="100dp"
                     android:layout_weight="80"
@@ -62,7 +62,7 @@
                 </android.support.v4.view.ViewPager>
 
                 <ImageView
-                    android:id="@+id/nia_iv_investmnet_right"
+                    android:id="@+id/ca_iv_investmnet_right"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -92,7 +92,7 @@
                         android:textSize="16sp" />
 
                     <EditText
-                        android:id="@+id/nia_et_amount"
+                        android:id="@+id/ca_et_amount"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -122,7 +122,7 @@
                         android:textSize="16sp" />
 
                     <!--  <EditText
-                          android:id="@+id/nia_et_duration"
+                          android:id="@+id/ca_et_duration"
                           android:layout_width="0dp"
                           android:layout_height="wrap_content"
                           android:layout_weight="1"
@@ -143,7 +143,7 @@
                             android:layout_height="wrap_content"
                             android:paddingTop="5dp"
                             android:paddingBottom="5dp"
-                            android:id="@+id/nia_sp_duration"
+                            android:id="@+id/ca_sp_duration"
                             />
                     </RelativeLayout>
 
@@ -160,7 +160,7 @@
                     android:paddingRight="20dp">
 
                     <Button
-                        android:id="@+id/nia_bt_calculate"
+                        android:id="@+id/ca_bt_calculate"
                         android:layout_width="wrap_content"
 
                         android:layout_height="wrap_content"
@@ -190,16 +190,17 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="@string/lbl_total_profit"
+                        android:text="@string/lbl_monthly_profit"
                         android:textSize="16sp" />
 
                     <TextView
-                        android:id="@+id/nia_tv_total_profit"
+                        android:id="@+id/ca_tv_monthly_profit"
+                        android:text="@string/zeroamt"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="right"
-                        android:text="@string/zeroamt"
+
                         android:textSize="16sp" />
 
                 </LinearLayout>
@@ -216,20 +217,21 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="@string/lbl_monthly_profit"
+                        android:text="@string/lbl_total_profit"
                         android:textSize="16sp" />
 
                     <TextView
-                        android:id="@+id/nia_tv_monthly_profit"
-                        android:text="@string/zeroamt"
+                        android:id="@+id/ca_tv_total_profit"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="right"
-
+                        android:text="@string/zeroamt"
                         android:textSize="16sp" />
 
                 </LinearLayout>
+
+
 
 
             </LinearLayout>
